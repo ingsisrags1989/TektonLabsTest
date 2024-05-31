@@ -12,6 +12,6 @@ namespace Infrastructure.Repositories.Generic
     {
         IQueryable<TEntity> GetAll();
         Task<TEntity> InsertAsync(TEntity entity);
-        TEntity UpdateAsync(TEntity entity);
+        Task<TEntity> UpdateAsync(TEntity entity);
     }
 }

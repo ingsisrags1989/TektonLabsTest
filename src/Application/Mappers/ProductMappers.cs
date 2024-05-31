@@ -16,6 +16,8 @@ namespace Application.Mappers
         {
             CreateMap<CreateProductCommand, ProductEntity>();
 
+            CreateMap<UpdateProductCommand, ProductEntity>();
+
             CreateMap<ProductEntity, ProductDto>();
            
             CreateMap<ProductDto, ProductEntity>();

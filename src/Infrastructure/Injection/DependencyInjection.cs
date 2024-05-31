@@ -18,9 +18,11 @@ namespace Infrastructure.Repositories.Injection
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             var migrationsAssembly = typeof(DependencyInjection).GetTypeInfo().Assembly.GetName().Name;
+            string connectionString = Environment.GetEnvironmentVariable("SQL_SERVER_CONNECTION") ??"";
+
 
             services.AddDbContext<ProductContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                options.UseSqlServer(connectionString,
                 sqlServerOptionsAction: sqlOptions =>
                 {
                     sqlOptions.MigrationsAssembly(migrationsAssembly);

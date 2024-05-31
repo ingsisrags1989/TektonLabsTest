@@ -1,3 +1,4 @@
+using Application.Handlers;
 using AutoMapper;
 using Domain.Repositories;
 using Infrastructure.Repositories.Context;
@@ -7,9 +8,12 @@ using Infrastructure.Repositories.Product;
 using Infrastructure.Repositories.UnitOfWork;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Products.Api.MiddlewareException;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,13 +43,7 @@ builder.Services.AddScoped(typeof(DbContext), typeof(ProductContext));
 builder.Services.AddScoped(typeof(IUnitOfWorkAsync), typeof(UnitOfWorkAync));
 builder.Services.AddTransient(typeof(IProductRepository), typeof(ProductRepository));
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("CorsPolicy",
-        builder => builder.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
-});
+
 
 var profiles = "Application";
 
@@ -59,11 +57,30 @@ IMapper mapper = mappingConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
 
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
+    new Assembly[] { typeof(CreateProductCommandHandler).Assembly,
+    typeof(UpdateProductCommandHandler).Assembly,
+    typeof(GetProductByIdQueryHandler).Assembly
+    }
+));
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(options => options.AllowAnyHeader().AllowAnyOrigin().AllowCredentials().AllowAnyMethod());
+});
+
+
+
 var app = builder.Build();
+
+RunMigrations(app);
 
 app.UseRouting();
 
-if (app.Environment.IsDevelopment()) 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
@@ -81,3 +98,23 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+static void RunMigrations(WebApplication app)
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        try
+        {
+            logger.LogInformation($"Run database migrations {typeof(ProductContext).Name}");
+            var dbContext = services.GetRequiredService<ProductContext>();
+            dbContext.Database.Migrate();
+        }
+        catch (Exception ex)
+        {
+
+            logger.LogError(ex, "An error occurred while migrating the database.");
+        }
+    }
+}

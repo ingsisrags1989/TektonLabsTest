@@ -2,39 +2,31 @@ version: '3.4'
 
 services:
   sqldata:
-    image: mcr.microsoft.com/mssql/server:2017-latest 
+    image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
-        SA_PASSWORD: "Pass@word"
-        ACCEPT_EULA: "Y"
+      ACCEPT_EULA: 'Y'
+      MSSQL_SA_PASSWORD: 'Pass@word'
+      MSSQL_DATA_DIR: /var/opt/mssql/data
+      MSSQL_PID: 'Developer' 
+      MSSQL_TCP_PORT: 1433 
     ports:
         - "5001:1433"
     volumes:
-      - data:/var/opt/mssql/data
+      - ./data:/var/opt/mssql/data
+      - ./log:/var/opt/mssql/log
+      - ./secrets:/var/opt/mssql/secret
 
-  product-service-test:
+  product-service:
     image: ${REGISTRY:-realstate}/productapi:${PLATFORM:-linux}-${TAG:-latest}
-    container_name: product-service-test
+    container_name: product-service
     environment:
         ASPNETCORE_ENVIRONMENT: "Development"
-        SQL_SERVER_CONNECTION: "Server=sqldata; Database=RealStates; User=sa; Password=Pass@word;"
+        SQL_SERVER_CONNECTION: "Server=sqldata; Database=ProductDb; User=sa; Password=Pass@word;TrustServerCertificate=True;"
     build:
       context: .
-      dockerfile: src/Services/Product/Product.Api/Dockerfile
+      dockerfile: src/Products.Api/Dockerfile
     ports:
         - "5100:80"
-    depends_on:
-      - sqldata
-
-  gateway-service-test:
-    image: ${REGISTRY:-v}/apigateway:${PLATFORM:-linux}-${TAG:-latest}
-    container_name: gateway-service-test
-    environment:
-    - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-        - "5000:80"
-    build:
-      context: .
-      dockerfile: src/ApiGateway/ApiGateway/Dockerfile
     depends_on:
       - sqldata
  

@@ -24,19 +24,17 @@ namespace Infrastructure.Repositories.Product
         public async Task<ProductEntity> CreateProductAsync(ProductEntity product)
         {
             var productResult = await _productGenericRepository.InsertAsync(product);
-            await _unitOfWorkAync.SaveChangesAsync();
             return productResult;
         }
 
         public async Task<ProductEntity> GetProductByIdAsync(Guid id)
         {
-            return await _productGenericRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id) ?? new ProductEntity();
+            return await _productGenericRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id) ?? null;
         }
 
         public async Task<ProductEntity> UpdateProductAsync(ProductEntity product)
         {
-            var productResult = _productGenericRepository.UpdateAsync(product);
-            await _unitOfWorkAync.SaveChangesAsync();
+            var productResult = await _productGenericRepository.UpdateAsync(product);
             return productResult;
         }
     }
