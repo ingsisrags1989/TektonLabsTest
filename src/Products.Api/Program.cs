@@ -6,7 +6,6 @@ using Infrastructure.Repositories.Context;
 using Infrastructure.Repositories.Generic;
 using Infrastructure.Repositories.Injection;
 using Infrastructure.Repositories.Product;
-using Infrastructure.Repositories.UnitOfWork;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +13,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using Products.Api.MiddlewareException;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,7 +39,6 @@ DependencyInjection.AddInfrastructure(builder.Services, builder.Configuration);
 
 
 builder.Services.AddScoped(typeof(DbContext), typeof(ProductContext));
-builder.Services.AddScoped(typeof(IUnitOfWorkAsync), typeof(UnitOfWorkAync));
 builder.Services.AddTransient(typeof(IProductRepository), typeof(ProductRepository));
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
@@ -79,7 +76,7 @@ RunMigrations(app);
 
 app.UseRouting();
 
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -97,6 +94,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.Run();
 

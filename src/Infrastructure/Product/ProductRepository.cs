@@ -1,7 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
 using Infrastructure.Repositories.Generic;
-using Infrastructure.Repositories.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,17 +13,20 @@ namespace Infrastructure.Repositories.Product
     public class ProductRepository : IProductRepository
     {
         private readonly IGenericRepository<ProductEntity> _productGenericRepository;
-        private readonly IUnitOfWorkAsync _unitOfWorkAync;
-        public ProductRepository(IGenericRepository<ProductEntity> genericRepository, IUnitOfWorkAsync unitOfWorkAsync)
+        public ProductRepository(IGenericRepository<ProductEntity> genericRepository)
         {
 
             _productGenericRepository = genericRepository;
-            _unitOfWorkAync = unitOfWorkAsync;
         }
         public async Task<ProductEntity> CreateProductAsync(ProductEntity product)
         {
             var productResult = await _productGenericRepository.InsertAsync(product);
             return productResult;
+        }
+
+        public IQueryable<ProductEntity> GetAll()
+        {
+            return _productGenericRepository.GetAll();
         }
 
         public async Task<ProductEntity> GetProductByIdAsync(Guid id)

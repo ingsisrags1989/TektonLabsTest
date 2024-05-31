@@ -12,5 +12,6 @@ namespace Domain.Repositories
         Task<ProductEntity> GetProductByIdAsync(Guid id);
         Task<ProductEntity> CreateProductAsync(ProductEntity product);
         Task<ProductEntity> UpdateProductAsync(ProductEntity product);
+        IQueryable<ProductEntity> GetAll();
     }
 }

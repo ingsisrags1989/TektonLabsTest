@@ -3,7 +3,6 @@ using Domain.Repositories;
 using Infrastructure.Repositories.Context;
 using Infrastructure.Repositories.Generic;
 using Infrastructure.Repositories.Product;
-using Infrastructure.Repositories.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System.Net;
 
 namespace Domain.Common.MiddlewareException
@@ -33,19 +34,19 @@ namespace Domain.Common.MiddlewareException
             context.Response.ContentType = "application/json";
 
             var statusCode = HttpStatusCode.InternalServerError;
-            var message = "Internal Server Error";
+            var message = exception.Message;
 
             if (exception is NotFoundException)
             {
                 statusCode = HttpStatusCode.NotFound;
-                message = "Not found";
             }
             context.Response.StatusCode = (int)statusCode;
-            return context.Response.WriteAsync(new
+            var response = JsonConvert.SerializeObject(new ResponseStatusCode
             {
                 StatusCode = context.Response.StatusCode,
-                Message = message
-            }.ToString() ?? "");
+                Message = message ?? ""
+            });
+            return context.Response.WriteAsync(response);
         }
     }
 }
