@@ -1,5 +1,6 @@
 using Application.Handlers;
 using AutoMapper;
+using Domain.Common.MiddlewareException;
 using Domain.Repositories;
 using Infrastructure.Repositories.Context;
 using Infrastructure.Repositories.Generic;

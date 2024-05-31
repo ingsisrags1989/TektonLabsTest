@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using System.Net;
 
-namespace Products.Api.MiddlewareException
+namespace Domain.Common.MiddlewareException
 {
     public class ExceptionHandlingMiddleware
     {
