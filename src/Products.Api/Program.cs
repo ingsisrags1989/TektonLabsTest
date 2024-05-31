@@ -1,5 +1,6 @@
 using Application.Handlers;
 using AutoMapper;
+using Domain.Cache;
 using Domain.Common.MiddlewareException;
 using Domain.Repositories;
 using Infrastructure.Repositories.Context;
@@ -37,10 +38,11 @@ builder.Services.AddSwaggerGen(c =>
 
 DependencyInjection.AddInfrastructure(builder.Services, builder.Configuration);
 
-
+builder.Services.AddMemoryCache();
 builder.Services.AddScoped(typeof(DbContext), typeof(ProductContext));
 builder.Services.AddTransient(typeof(IProductRepository), typeof(ProductRepository));
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddSingleton<MemoryCache>();
 
 
 var profiles = "Application";

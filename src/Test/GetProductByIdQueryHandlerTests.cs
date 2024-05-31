@@ -1,7 +1,8 @@
 ﻿using Application.Dto;
 using Application.Handlers;
-using Application.Query;
+using Application.Queries;
 using AutoMapper;
+using Domain.Cache;
 using Domain.Entities;
 using Domain.Repositories;
 using Moq;
@@ -17,13 +18,14 @@ namespace Test
     {
         private readonly Mock<IProductRepository> _mockRepository;
         private readonly Mock<IMapper> _mockMapper;
+        private readonly Mock<MemoryCache> _mockMemoryCache;
         private readonly GetProductByIdQueryHandler _handler;
 
         public GetProductByIdQueryHandlerTests()
         {
             _mockRepository = new Mock<IProductRepository>();
             _mockMapper = new Mock<IMapper>();
-            _handler = new GetProductByIdQueryHandler(_mockRepository.Object, _mockMapper.Object);
+            _handler = new GetProductByIdQueryHandler(_mockRepository.Object, _mockMapper.Object, _mockMemoryCache.Object);
         }
 
         [Fact]
