@@ -35,7 +35,7 @@ namespace Infrastructure.Repositories.Product
 
         public async Task<ProductEntity> UpdateProductAsync(ProductEntity product)
         {
-            var productResult = await _productGenericRepository.UpdateAsync(product);
+            var productResult = _productGenericRepository.UpdateAsync(product);
             await _unitOfWorkAync.SaveChangesAsync();
             return productResult;
         }
