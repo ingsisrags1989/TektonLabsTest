@@ -1,6 +1,6 @@
 ﻿using Application.Commands;
 using Application.Dto;
-using Application.Query;
+using Application.Queries;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Repositories;
@@ -28,7 +28,7 @@ namespace Application.Handlers
         public async Task<ProductDto> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             var product = await _productRepository.GetProductByIdAsync(request.Id);
-            if (product is null) throw new Exception("No existe el producto");
+            if (product is null) return new ProductDto();
 
             return _mapper.Map<ProductDto>(product);
         }

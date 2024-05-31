@@ -10,6 +10,9 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/Products.Api/Products.Api.csproj", "src/Products.Api/"]
+COPY ["src/Application/Application.csproj", "src/Application/"]
+COPY ["src/Domain/Domain.csproj", "src/Domain/"]
+COPY ["src/Infrastructure/Infrastructure.Repositories.csproj", "src/Infrastructure/"]
 RUN dotnet restore "./src/Products.Api/Products.Api.csproj"
 COPY . .
 WORKDIR "/src/src/Products.Api"

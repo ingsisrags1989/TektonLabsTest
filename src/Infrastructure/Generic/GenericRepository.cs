@@ -1,5 +1,4 @@
-﻿using Infrastructure.Repositories.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
@@ -12,13 +11,11 @@ namespace Infrastructure.Repositories.Generic
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         private readonly DbContext _dbContext;
-        private readonly IUnitOfWorkAsync _unitOfWorkAsync;
         private readonly DbSet<TEntity> _dbSet;
 
-        public GenericRepository(DbContext context, IUnitOfWorkAsync unitOfWork)
+        public GenericRepository(DbContext context)
         {
             _dbContext = context;
-            _unitOfWorkAsync = unitOfWork;
             if (_dbContext != null)
             {
                 _dbSet = _dbContext.Set<TEntity>();
@@ -33,17 +30,16 @@ namespace Infrastructure.Repositories.Generic
 
         public async Task<TEntity> InsertAsync(TEntity entity)
         {
-            _dbContext.Entry(entity).State = EntityState.Added;
             var entityDb = await _dbSet.AddAsync(entity);
-            await _unitOfWorkAsync.SyncObjectState(entity);
+            await _dbContext.SaveChangesAsync();
             return entityDb.Entity;
         }
 
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            _dbContext.Entry(entity).State = EntityState.Modified;
-            await _unitOfWorkAsync.SyncObjectState(entity);
-            return entity;
+            var entityDb = _dbSet.Update(entity);
+             await _dbContext.SaveChangesAsync();
+            return entityDb.Entity;
         }
     }
 }

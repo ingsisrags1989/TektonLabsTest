@@ -1,6 +1,7 @@
 ﻿using Application.Commands;
 using Application.Dto;
 using AutoMapper;
+using Domain.Common.MiddlewareException;
 using Domain.Entities;
 using Domain.Repositories;
 using MediatR;
@@ -28,7 +29,7 @@ namespace Application.Handlers
 
             var product = await _productRepository.GetProductByIdAsync(request.Id);
 
-            if (product is null) throw new Exception("No existe el producto");
+            if (product is null) throw new NotFoundException("No existe el producto");
 
             product = _mapper.Map(request, product);
 
