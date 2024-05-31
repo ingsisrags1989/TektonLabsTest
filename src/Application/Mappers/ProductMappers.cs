@@ -2,6 +2,7 @@
 using Application.Dto;
 using AutoMapper;
 using Domain.Entities;
+using Domain.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,16 @@ namespace Application.Mappers
     {
         public ProductMappers()
         {
-            CreateMap<CreateProductCommand, ProductEntity>();
+            CreateMap<CreateProductCommand, ProductEntity>()
+                .ForMember(y => y.StatusName, o => o.MapFrom(w => w.Status ? Status.Active : Status.Inactive))
+                ;
 
-            CreateMap<UpdateProductCommand, ProductEntity>();
+            CreateMap<UpdateProductCommand, ProductEntity>()
+                            .ForMember(y => y.StatusName, o => o.MapFrom(w => w.Status ? Status.Active : Status.Inactive))
+                ;
 
             CreateMap<ProductEntity, ProductDto>();
-           
+
             CreateMap<ProductDto, ProductEntity>();
         }
     }

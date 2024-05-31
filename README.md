@@ -62,3 +62,9 @@ https --> 5150
 ## Swagger
 
 https://localhost:5150/swagger/index.html
+
+
+## Memory Cache
+
+En esta api se utiliza Memory Cache para almacenar la cache de los estados.
+

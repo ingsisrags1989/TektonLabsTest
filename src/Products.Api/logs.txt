@@ -3,3 +3,12 @@
 2024-05-31T21:34:59Z - Request: /product/v1/create-product completed in 2549.7933 ms
 2024-05-31T21:36:28Z - Request: / completed in 0.3506 ms
 2024-05-31T21:36:38Z - Request: /product/v1/create-product completed in 3694.5128 ms
+2024-05-31T22:32:07Z - Request: / completed in 0.66 ms
+2024-05-31T22:33:46Z - Request: / completed in 0.6571 ms
+2024-05-31T22:34:14Z - Request: /product/v1/create-product completed in 5425.0136 ms
+2024-05-31T22:35:51Z - Request: /product/v1/get-product-by-id/b644a5d9-2d92-4227-d1c6-08dc81c1ccd7 completed in 13195.6141 ms
+2024-05-31T22:36:29Z - Request: /product/v1/update-product completed in 1857.8334 ms
+2024-05-31T22:37:08Z - Request: /product/v1/get-product-by-id/b644a5d9-2d92-4227-d1c6-08dc81c1ccd7 completed in 31290.7627 ms
+2024-05-31T22:37:57Z - Request: /product/v1/get-product-by-id/b644a5d9-2d92-4227-d1c6-08dc81c1ccd7 completed in 42920.9933 ms
+2024-05-31T22:42:51Z - Request: /product/v1/get-product-by-id/B644A5D9-2D92-4227-D1C6-08DC81C1CCD7 completed in 15290.2445 ms
+2024-05-31T22:43:01Z - Request: /product/v1/get-product-by-id/B644A5D9-2D92-4227-D1C6-08DC81C1CCD7 completed in 7888.9976 ms
