@@ -27,6 +27,7 @@ services:
       dockerfile: src/Products.Api/Dockerfile
     ports:
         - "5100:80"
+        - "5150:443"
     depends_on:
       - sqldata
  

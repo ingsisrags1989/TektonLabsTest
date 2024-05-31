@@ -1,6 +1,6 @@
 ﻿using Application.Commands;
 using Application.Dto;
-using Application.Query;
+using Application.Queries;
 using Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

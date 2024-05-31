@@ -1,6 +1,6 @@
 ﻿using Application.Commands;
 using Application.Dto;
-using Application.Query;
+using Application.Queries;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Repositories;

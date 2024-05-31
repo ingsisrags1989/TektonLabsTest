@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Query
+namespace Application.Queries
 {
     public class GetProductByIdQuery : IRequest<ProductDto>
     {
