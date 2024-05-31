@@ -20,7 +20,17 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen();
+
+//SwaggerGen
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+});
+
 
 DependencyInjection.AddInfrastructure(builder.Services, builder.Configuration);
 
@@ -29,7 +39,6 @@ builder.Services.AddScoped(typeof(DbContext), typeof(ProductContext));
 builder.Services.AddScoped(typeof(IUnitOfWorkAsync), typeof(UnitOfWorkAync));
 builder.Services.AddTransient(typeof(IProductRepository), typeof(ProductRepository));
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddMvc();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
@@ -51,16 +60,18 @@ builder.Services.AddSingleton(mapper);
 
 
 var app = builder.Build();
+
 app.UseRouting();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapSwagger();
-});
 
 if (app.Environment.IsDevelopment()) 
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+        c.RoutePrefix = "swagger"; // Serve the Swagger UI at the app's root
+    });
 }
 
 app.UseHttpsRedirection();
