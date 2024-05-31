@@ -1,0 +1,5 @@
+2024-05-31T21:34:24Z - Request: / completed in 0.6783 ms
+2024-05-31T21:34:42Z - Request: /product/v1/create-product completed in 4021.0232 ms
+2024-05-31T21:34:59Z - Request: /product/v1/create-product completed in 2549.7933 ms
+2024-05-31T21:36:28Z - Request: / completed in 0.3506 ms
+2024-05-31T21:36:38Z - Request: /product/v1/create-product completed in 3694.5128 ms

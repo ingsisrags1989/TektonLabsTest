@@ -37,15 +37,12 @@ namespace Domain.Common.MiddlewareException
                     stopwatch.Stop();
                     var requestTime = stopwatch.Elapsed.TotalMilliseconds;
 
-                    // Log request time to a text file
                     LogRequestTimeToFile(context, requestTime);
 
-                    // Copy the contents of the new memory stream (which contains the response) to the original stream
                     responseBody.Seek(0, SeekOrigin.Begin);
                     await responseBody.CopyToAsync(originalBodyStream);
                 }
 
-                await _next(context);
             }
             catch (Exception ex)
             {
@@ -58,7 +55,7 @@ namespace Domain.Common.MiddlewareException
         private void LogRequestTimeToFile(HttpContext context, double requestTime)
         {
             var logMessage = $"{DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")} - Request: {context.Request.Path} completed in {requestTime} ms\n";
-            var logFilePath = "request_logs.txt"; // Specify your log file path here
+            var logFilePath = "logs.txt"; // Specify your log file path here
 
             // Write log message to file
             try
