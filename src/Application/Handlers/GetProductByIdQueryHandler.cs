@@ -20,18 +20,23 @@ namespace Application.Handlers
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
         private readonly MemoryCache _memoryCache;
-
-        public GetProductByIdQueryHandler(IProductRepository repository, IMapper mapper, MemoryCache memoryCache)
+        private readonly IProductDiscountRepository _productDiscountRepository;
+        public GetProductByIdQueryHandler(IProductRepository repository, IMapper mapper, MemoryCache memoryCache,
+            IProductDiscountRepository productDiscountRepository
+            )
         {
             _productRepository = repository;
             _mapper = mapper;
             _memoryCache = memoryCache;
+            _productDiscountRepository = productDiscountRepository;
         }
 
 
         public async Task<ProductDto> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             var product = await _productRepository.GetProductByIdAsync(request.Id);
+
+            if (product is null) return new ProductDto();
 
             var statusFromCache = _memoryCache.GetCache<Status?>(request.Id.ToString());
             if (statusFromCache == null)
@@ -43,10 +48,10 @@ namespace Application.Handlers
                 product.StatusName = statusFromCache.HasValue ? statusFromCache.Value : product.StatusName;
             }
 
+            var discount = await _productDiscountRepository.GetDataAsync(product.Id);
+            var finalPrice = product.Price - (product.Price * discount.Discount/ 100);
 
-            if (product is null) return new ProductDto();
-
-            return _mapper.Map<ProductDto>(product);
+            return _mapper.Map<ProductDto>( new Tuple<ProductEntity, int, decimal>(product, discount.Discount, finalPrice));
         }
     }
 }

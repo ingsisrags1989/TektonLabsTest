@@ -29,7 +29,7 @@ namespace Products.Api.Controllers
 
         [HttpGet("v1/get-product-by-id/{Id}")]
         [ProducesResponseType(typeof(Response<ProductDto>), (int)HttpStatusCode.OK)]
-        public async Task<ProductDto> GetPropertiesById([FromRoute] Guid Id)
+        public async Task<ProductDto> GetPropertiesById([FromRoute] int Id)
         {
             var product = await _mediator.Send(new GetProductByIdQuery() { Id = Id });
             return product;

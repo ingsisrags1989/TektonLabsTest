@@ -29,7 +29,7 @@ namespace Infrastructure.Repositories.Product
             return _productGenericRepository.GetAll();
         }
 
-        public async Task<ProductEntity> GetProductByIdAsync(Guid id)
+        public async Task<ProductEntity> GetProductByIdAsync(int id)
         {
             return await _productGenericRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id) ?? null;
         }

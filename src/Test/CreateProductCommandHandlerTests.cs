@@ -36,7 +36,7 @@ namespace Test
                 Price = 10.99M,
             };
 
-            var product = new ProductEntity { Id = Guid.NewGuid(), Name = command.Name, Price = command.Price };
+            var product = new ProductEntity { Id = 1, Name = command.Name, Price = command.Price };
             var productDto = new ProductDto { Id = product.Id, Name = product.Name, Price = product.Price};
 
             _mockMapper.Setup(m => m.Map<ProductEntity>(command)).Returns(product);

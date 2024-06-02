@@ -33,7 +33,7 @@ namespace Test
             // Arrange
             var command = new UpdateProductCommand
             {
-                Id = Guid.NewGuid(),
+                Id = 1,
                 Name = "Updated Product",
                 Price = 15.99M,
             };
@@ -63,7 +63,7 @@ namespace Test
             // Arrange
             var command = new UpdateProductCommand
             {
-                Id = Guid.NewGuid(),
+                Id = 1,
                 Name = "Updated Product",
                 Price = 15.99M,
             };

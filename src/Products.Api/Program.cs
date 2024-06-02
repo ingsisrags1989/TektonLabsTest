@@ -3,6 +3,7 @@ using AutoMapper;
 using Domain.Cache;
 using Domain.Common.MiddlewareException;
 using Domain.Repositories;
+using Infrastructure.ExternalService;
 using Infrastructure.Repositories.Context;
 using Infrastructure.Repositories.Generic;
 using Infrastructure.Repositories.Injection;
@@ -42,6 +43,8 @@ builder.Services.AddMemoryCache();
 builder.Services.AddScoped(typeof(DbContext), typeof(ProductContext));
 builder.Services.AddTransient(typeof(IProductRepository), typeof(ProductRepository));
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddTransient(typeof(IProductDiscountRepository), typeof(ProductDiscountRepository));
+builder.Services.AddHttpClient<IProductDiscountRepository, ProductDiscountRepository>();
 builder.Services.AddSingleton<MemoryCache>();
 
 

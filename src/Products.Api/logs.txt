@@ -12,3 +12,12 @@
 2024-05-31T22:37:57Z - Request: /product/v1/get-product-by-id/b644a5d9-2d92-4227-d1c6-08dc81c1ccd7 completed in 42920.9933 ms
 2024-05-31T22:42:51Z - Request: /product/v1/get-product-by-id/B644A5D9-2D92-4227-D1C6-08DC81C1CCD7 completed in 15290.2445 ms
 2024-05-31T22:43:01Z - Request: /product/v1/get-product-by-id/B644A5D9-2D92-4227-D1C6-08DC81C1CCD7 completed in 7888.9976 ms
+2024-05-31T22:45:22Z - Request: /product/v1/get-product-by-id/B644A5D9-2D92-4227-D1C6-08DC81C1CCD7 completed in 3394.0884 ms
+2024-06-02T12:53:45Z - Request: / completed in 0.7213 ms
+2024-06-02T13:22:43Z - Request: / completed in 0.6755 ms
+2024-06-02T13:23:30Z - Request: /product/v1/create-product completed in 7788.4654 ms
+2024-06-02T13:24:55Z - Request: /product/v1/get-product-by-id/1 completed in 34515.8338 ms
+2024-06-02T13:31:24Z - Request: / completed in 0.6478 ms
+2024-06-02T13:32:03Z - Request: /product/v1/get-product-by-id/1 completed in 26008.1285 ms
+2024-06-02T13:32:35Z - Request: /product/v1/update-product completed in 2453.9237 ms
+2024-06-02T13:32:58Z - Request: /product/v1/get-product-by-id/1 completed in 17120.9427 ms
