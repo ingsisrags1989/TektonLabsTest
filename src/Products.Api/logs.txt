@@ -21,3 +21,4 @@
 2024-06-02T13:32:03Z - Request: /product/v1/get-product-by-id/1 completed in 26008.1285 ms
 2024-06-02T13:32:35Z - Request: /product/v1/update-product completed in 2453.9237 ms
 2024-06-02T13:32:58Z - Request: /product/v1/get-product-by-id/1 completed in 17120.9427 ms
+2024-06-02T13:40:21Z - Request: / completed in 1.7208 ms
